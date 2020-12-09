@@ -1,0 +1,36 @@
+{
+    "name": "pseudo-su/php-service-template",
+    "description": "ReactPHP service-template",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "8",
+        "react/event-loop": "^1.1",
+        "react/http": "^1.2",
+        "react/promise": "^2.8"
+    },
+    "scripts": {
+        "start:server": "@php bin/event-processor.php",
+        "start:message-processor": "@php bin/http-server.php"
+    },
+
+    "config": {
+        "process-timeout": 0,
+        "platform": {
+            "php": "8.0"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Pseudo\\PhpServiceTemplate\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pseudo\\PhpServiceTemplate\\Test\\Unit\\": "tests/unit",
+            "Pseudo\\PhpServiceTemplate\\Test\\Integration\\": "tests/integration"
+        }
+    }
+}
