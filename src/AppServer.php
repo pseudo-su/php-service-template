@@ -29,6 +29,7 @@ class AppServer
 
     public function build(): HttpServer
     {
+        // TODO: router?
         $middlewareFn = function (ServerRequestInterface $request, callable $next) {
             $promise = Promise\resolve($next($request));
             return $promise->then(function (ResponseInterface $response) {
