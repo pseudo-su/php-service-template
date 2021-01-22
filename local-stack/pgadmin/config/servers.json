@@ -1,0 +1,15 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "local-stack postgres",
+      "Group": "local-stack",
+      "Host": "cnc_postgres",
+      "Port": 5432,
+      "Username": "root",
+      "Password": "1234",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}
+

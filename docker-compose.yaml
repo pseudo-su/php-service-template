@@ -1,0 +1,55 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    command: ["postgres", "-c", "log_statement=all"]
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./local-stack/.env
+    volumes:
+      - ./local-stack/postgres/data:/var/lib/postgresql/data/ # persist data even if container shuts down
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:4.15
+    env_file:
+      - ./local-stack/.env
+    depends_on:
+      - 'postgres'
+    ports:
+      - 5050:5050
+    volumes:
+      - './local-stack/pgadmin/config/servers.json:/pgadmin4/servers.json'
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    env_file:
+      - ./local-stack/.env
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./local-stack/rabbitmq/data:/var/lib/rabbitmq
+      - ./local-stack/rabbitmq/logs:/var/log/rabbitmq
+      - ./local-stack/rabbitmq/etc:/etc/rabbitmq
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    command: redis-server
+    ports:
+      - 6379:6379
+    volumes:
+      - ./local-stack/redis/data:/var/lib/redis
+    #   - ./local-stack/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    env_file:
+      - ./local-stack/.env
+
+  metrics_pushgateway:
+    image: prom/pushgateway:latest
+    container_name: metrics_pushgateway
+    ports:
+      - 9091:9091
