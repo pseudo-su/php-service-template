@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0242b57b3b0d5b8d76c32be8d1cb0f3a",
+    "content-hash": "fab9bd2e74dd7513d4003fead2f3ac10",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -773,7 +773,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "ext-swoole": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
