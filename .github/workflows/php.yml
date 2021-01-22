@@ -16,7 +16,7 @@ jobs:
         with:
           php-version: "8.0"
           extensions: swoole
-          ini-values: memory_limit=4096M,
+          ini-values: memory_limit=4096M
           tools: composer:v2
           coverage: xdebug
           fail-fast: true
