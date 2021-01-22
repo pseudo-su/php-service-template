@@ -7,9 +7,8 @@
     "require": {
         "php": "^8.0",
         "ext-swoole": "*",
-        "react/event-loop": "^1.1",
-        "react/http": "^1.2",
-        "react/promise": "^2.8"
+        "php-amqplib/php-amqplib": "^2.12",
+        "slim/slim": "4.*"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.4"
