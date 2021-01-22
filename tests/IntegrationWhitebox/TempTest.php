@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pseudo\PhpServiceTemplate\Tests\Integration;
+namespace Pseudo\PhpServiceTemplate\Tests\IntegrationWhitebox;
 
 use PHPUnit\Framework\TestCase;
 

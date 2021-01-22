@@ -37,7 +37,7 @@ class AppServer
             });
         };
         $appHandlerFn = function (ServerRequestInterface $request): Response {
-            return new Response(200, [], '{}');
+            return new Response(200, [], '{"ok": true}');
         };
 
         return new HttpServer($this->loop, $middlewareFn, $appHandlerFn);

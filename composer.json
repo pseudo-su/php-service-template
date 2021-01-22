@@ -18,7 +18,8 @@
         "message-processor:start": "@php bin/http-server.php",
         "test": "php vendor/bin/phpunit",
         "test:unit": "php vendor/bin/phpunit --testsuite Unit",
-        "test:integration": "php vendor/bin/phpunit --testsuite Integration",
+        "test:integration:whitebox": "php vendor/bin/phpunit --testsuite IntegrationWhitebox",
+        "test:integration:blackbox": "php vendor/bin/phpunit --testsuite IntegrationBlackbox",
         "devstack:restart": [
             "@devstack:stop",
             "@devstack:start"
