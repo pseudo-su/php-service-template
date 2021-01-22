@@ -1,26 +1,27 @@
 version: "3"
 services:
-
   # Containers for local development
 
-  devstack_dev:
-    container_name: devstack_dev
-    depends_on:
-      - devstack_app
+  devstack_cli:
+    container_name: devstack_cli
     build:
       context: .
       dockerfile: Dockerfile.dev
+    restart: "no"
+    depends_on:
+      - devstack_tools
+      - devstack_app
     env_file: $PWD/devstack/.env
     volumes:
       - .:/app
 
   devstack_app:
-      image: tianon/true
-      restart: "no"
-      depends_on:
-        - devstack_external_deps
-        - http_server
-        - message_processor
+    image: tianon/true
+    restart: "no"
+    depends_on:
+      - devstack_app_deps
+      - http_server
+      - message_processor
 
   http_server:
     container_name: http_server
@@ -54,15 +55,20 @@ services:
 
   # Containers for local development external deps
 
-  devstack_external_deps:
-      image: tianon/true
-      restart: "no"
-      depends_on:
-          - postgres
-          - pgadmin
-          - rabbitmq
-          - redis
-          - metrics_pushgateway
+  devstack_app_deps:
+    image: tianon/true
+    restart: "no"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
+      - metrics_pushgateway
+
+  devstack_tools:
+    image: tianon/true
+    restart: "no"
+    depends_on:
+      - pgadmin
 
   postgres:
     container_name: postgres
@@ -81,15 +87,15 @@ services:
     env_file:
       - ./devstack/.env
     depends_on:
-      - 'postgres'
+      - "postgres"
     ports:
       - 5050:5050
     volumes:
-      - './devstack/pgadmin/config/servers.json:/pgadmin4/servers.json'
+      - "./devstack/pgadmin/config/servers.json:/pgadmin4/servers.json"
 
   rabbitmq:
-    image: rabbitmq:management
     container_name: rabbitmq
+    image: rabbitmq:management
     env_file:
       - ./devstack/.env
     ports:
@@ -101,8 +107,8 @@ services:
       - ./devstack/rabbitmq/etc:/etc/rabbitmq
 
   redis:
-    image: "redis:alpine"
     container_name: redis
+    image: "redis:alpine"
     command: redis-server
     ports:
       - 6379:6379
@@ -113,7 +119,7 @@ services:
       - ./devstack/.env
 
   metrics_pushgateway:
-    image: prom/pushgateway:latest
     container_name: metrics_pushgateway
+    image: prom/pushgateway:latest
     ports:
       - 9091:9091
