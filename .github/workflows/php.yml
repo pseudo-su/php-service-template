@@ -58,6 +58,7 @@ jobs:
           ini-values: memory_limit=4096M
           tools: composer:v2
           coverage: xdebug
+        env:
           fail-fast: true
 
       # -- App
@@ -90,8 +91,17 @@ jobs:
       - name: Run code verify
         run: composer verify
 
-      - name: Run tests
-        run: composer test
+      - name: Run unit tests
+        run: composer test:unit
 
-      - name: Setup devstack
+      - name: Start devstack
         run: docker-compose up -d devstack_app
+
+      - name: Run integration tests
+        run: composer test:integration
+
+      - name: Stop devstack
+        if: ${{ always() }}
+        run: docker-compose down
+
+
