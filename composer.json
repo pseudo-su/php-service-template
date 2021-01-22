@@ -59,8 +59,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Pseudo\\PhpServiceTemplate\\Test\\Unit\\": "tests/unit",
-            "Pseudo\\PhpServiceTemplate\\Test\\Integration\\": "tests/integration"
+            "Pseudo\\PhpServiceTemplate\\Test\\": "test/"
         }
     }
 }

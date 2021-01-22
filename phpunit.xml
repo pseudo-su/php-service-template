@@ -18,13 +18,13 @@
     </php>
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">tests/Unit</directory>
+            <directory suffix="Test.php">test/Unit</directory>
         </testsuite>
         <testsuite name="IntegrationWhitebox">
-            <directory suffix="Test.php">tests/IntegrationWhitebox</directory>
+            <directory suffix="Test.php">test/IntegrationWhitebox</directory>
         </testsuite>
         <testsuite name="IntegrationBlackbox">
-            <directory suffix="Test.php">tests/IntegrationBlackbox</directory>
+            <directory suffix="Test.php">test/IntegrationBlackbox</directory>
         </testsuite>
     </testsuites>
 

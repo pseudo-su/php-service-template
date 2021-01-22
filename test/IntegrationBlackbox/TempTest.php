@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pseudo\PhpServiceTemplate\Tests\IntegrationBlackbox;
+namespace Pseudo\PhpServiceTemplate\Test\IntegrationBlackbox;
 
 use PHPUnit\Framework\TestCase;
 
