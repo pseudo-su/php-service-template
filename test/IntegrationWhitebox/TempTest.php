@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TempTest extends TestCase
 {
-    public function testTemp()
+    public function testPlaceholder()
     {
         $this->assertEquals(true, true);
     }

@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TempTest extends TestCase
 {
-    public function testExampleEndpoint()
+    public function testTempEndpoint()
     {
         $url = "http://localhost:8080";
         $options = array(
