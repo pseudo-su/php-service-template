@@ -16,9 +16,9 @@
     "scripts": {
         "server:start": "@php bin/event-processor.php",
         "message-processor:start": "@php bin/http-server.php",
-        "test": "vendor/bin/phpunit",
-        "test:unit": "vendor/bin/phpunit --testsuite Unit",
-        "test:integration": "vendor/bin/phpunit --testsuite Integration",
+        "test": "php vendor/bin/phpunit",
+        "test:unit": "php vendor/bin/phpunit --testsuite Unit",
+        "test:integration": "php vendor/bin/phpunit --testsuite Integration",
         "devstack:restart": [
             "@devstack:stop",
             "@devstack:start"
@@ -28,12 +28,12 @@
         "devstack:run": "docker-compose run devstack_cli",
         "devstack:stop": "docker-compose down --remove-orphans",
         "verify": [
-            "vendor/bin/phpcs",
-            "vendor/bin/psalm"
+            "php vendor/bin/phpcs",
+            "php vendor/bin/psalm"
         ],
         "verify:fix": [
-            "vendor/bin/phpcbf",
-            "vendor/bin/psalm"
+            "php vendor/bin/phpcbf",
+            "php vendor/bin/psalm"
         ],
         "post-install-cmd": [
             "@composer check-platform-reqs",
