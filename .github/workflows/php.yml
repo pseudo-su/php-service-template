@@ -88,17 +88,14 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Run code verify
+      - name: Verify
         run: composer verify
-
-      - name: Run unit tests
-        run: composer test:unit
 
       - name: Start devstack
         run: docker-compose up -d devstack_app
 
-      - name: Run integration tests
-        run: composer test:integration
+      - name: Run all tests
+        run: composer test
 
       - name: Stop devstack
         if: ${{ always() }}
@@ -106,5 +103,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: reports
+          name: ${{ matrix.operating-system }}-${{ matrix.php-version }}-reports
           path: reports/
