@@ -14,6 +14,11 @@ RUN composer install \
         --no-autoloader \
         --no-interaction
 
+RUN composer dump-autoload \
+        --no-scripts \
+        --no-dev \
+        --optimize
+
 FROM php:8.0-cli-alpine as server
 
 WORKDIR /app

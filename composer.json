@@ -24,7 +24,8 @@
             "@devstack:start"
         ],
         "devstack:start": "docker-compose up -d --remove-orphans devstack_app",
-        "devstack:build-start": "docker-compose up -d --build --remove-orphans devstack_app",
+        "devstack:start:rebuild": "docker-compose up -d --build --remove-orphans devstack_app",
+        "devstack:run": "docker-compose run devstack_dev",
         "devstack:stop": "docker-compose down --remove-orphans",
         "verify": [
             "vendor/bin/phpcs",
