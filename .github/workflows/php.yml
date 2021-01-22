@@ -11,6 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # -- Docker tools
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-step1-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      # -- PHP tools
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
@@ -21,6 +35,7 @@ jobs:
           coverage: xdebug
           fail-fast: true
 
+      # -- App
       - uses: actions/checkout@v2
 
       - name: Validate composer.json and composer.lock
@@ -48,11 +63,11 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Show PHP info
-        run: php --version
-
       - name: Run code verify
-        run: composer run-script verify
+        run: composer verify
 
       - name: Run tests
-        run: php vendor/bin/phpunit --testsuite Unit
+        run: composer test
+
+      - name: Setup devstack
+        run: docker-compose up -d devstack_app

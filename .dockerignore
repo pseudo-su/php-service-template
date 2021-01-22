@@ -1,3 +1,8 @@
+### .dockerignore specifics
+/.github
+
+### Keep in sync with .gitignore
+
 # Tools
 /vendor/
 /vendor-bin/*/vendor/
