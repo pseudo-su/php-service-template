@@ -7,10 +7,19 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-version: ['8.0']
+    name: PHP ${{ matrix.php-version }} Test on ${{ matrix.operating-system }}
+    env:
+      php-extensions: swoole
+      key: cache-v001 # can be any string, change to clear the extension cache.
     steps:
+      - uses: actions/checkout@v2
+
       # -- Docker tools
       - name: Set up Docker Buildx
         id: buildx
@@ -25,18 +34,33 @@ jobs:
             ${{ runner.os }}-buildx-
 
       # -- PHP tools
+
+      - name: Setup cache environment
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: ${{ env.php-extensions }}
+          key: ${{ env.php-extensions }}
+
+      - name: Cache extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-keys: ${{ steps.extcache.outputs.key }}
+
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.0"
-          extensions: swoole
+          extensions: ${{ env.php-extensions }}
           ini-values: memory_limit=4096M
           tools: composer:v2
           coverage: xdebug
           fail-fast: true
 
       # -- App
-      - uses: actions/checkout@v2
 
       - name: Validate composer.json and composer.lock
         run: composer validate
