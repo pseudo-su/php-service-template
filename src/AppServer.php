@@ -13,8 +13,11 @@ use React\Promise\PromiseInterface;
 class AppServer
 {
     public function __construct(
+        // phpcs:disable
         private LoopInterface $loop,
-    ) {}
+        // phpcs:enable
+    ) {
+    }
 
     public function getUri(): string
     {
