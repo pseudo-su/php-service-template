@@ -6,15 +6,21 @@ services:
   devstack_dev:
     container_name: devstack_dev
     depends_on:
-      - http_server
-      - message_processor
-      - devstack_external_deps
+      - devstack_app
     build:
       context: .
       dockerfile: Dockerfile.dev
     env_file: $PWD/devstack/.env
     volumes:
       - .:/app
+
+  devstack_app:
+      image: tianon/true
+      restart: "no"
+      depends_on:
+        - devstack_external_deps
+        - http_server
+        - message_processor
 
   http_server:
     container_name: http_server
