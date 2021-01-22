@@ -8,35 +8,32 @@ use React\Http\Message\Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use React\Promise;
+use React\Promise\PromiseInterface;
 
 class AppServer
 {
-    private LoopInterface $loop;
-
-    public function withEventLoop(LoopInterface $loop): self
-    {
-        $this->loop = $loop;
-        return $this;
-    }
+    public function __construct(
+        private LoopInterface $loop,
+    ) {}
 
     public function getUri(): string
     {
-        $port = 8080;
+        $port = getenv('PORT') ?: 8080;
         $portString = $port ? ':' . $port : '';
         $uri = '0.0.0.0' . $portString;
+
         return $uri;
     }
 
     public function build(): HttpServer
     {
-        // TODO: router?
-        $middlewareFn = function (ServerRequestInterface $request, callable $next) {
+        $middlewareFn = function (ServerRequestInterface $request, callable $next): PromiseInterface {
             $promise = Promise\resolve($next($request));
             return $promise->then(function (ResponseInterface $response) {
                 return $response->withHeader('Content-Type', 'application/json');
             });
         };
-        $appHandlerFn = function (ServerRequestInterface $request) {
+        $appHandlerFn = function (ServerRequestInterface $request): Response {
             return new Response(200, [], '{}');
         };
 

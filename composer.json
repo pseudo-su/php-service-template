@@ -5,16 +5,47 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "require": {
-        "php": "8",
+        "php": "^8.0",
         "react/event-loop": "^1.1",
         "react/http": "^1.2",
         "react/promise": "^2.8"
     },
-    "scripts": {
-        "start:server": "@php bin/event-processor.php",
-        "start:message-processor": "@php bin/http-server.php"
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.4"
     },
+    "scripts": {
+        "server:start": "@php bin/event-processor.php",
+        "message-processor:start": "@php bin/http-server.php",
 
+
+
+
+        "test": "vendor/bin/phpunit",
+        "test:unit": "vendor/bin/phpunit --testsuite Unit",
+        "test:integration": "vendor/bin/phpunit --testsuite Integration",
+        "local-stack:restart": [
+            "@local-stack:stop",
+            "@local-stack:start"
+        ],
+        "local-stack:start": "docker-compose up -d --remove-orphans",
+        "local-stack:stop": "docker-compose down --remove-orphans",
+        "verify": [
+            "vendor/bin/phpcs",
+            "vendor/bin/psalm"
+        ],
+        "verify:fix": [
+            "vendor/bin/phpcbf",
+            "vendor/bin/psalm"
+        ],
+        "post-install-cmd": [
+            "@composer check-platform-reqs",
+            "@composer bin all install --ansi"
+        ],
+        "post-update-cmd": [
+            "@composer check-platform-reqs",
+            "@composer bin all update --ansi"
+        ]
+    },
     "config": {
         "process-timeout": 0,
         "platform": {

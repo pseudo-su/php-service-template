@@ -8,8 +8,7 @@ use Pseudo\PhpServiceTemplate\AppServer;
 
 $loop = Factory::create();
 
-$appServer = (new AppServer())
-    ->withEventLoop($loop);
+$appServer = new AppServer(loop: $loop);
 
 $socketServer = new SocketServer($appServer->getUri(), $loop);
 
