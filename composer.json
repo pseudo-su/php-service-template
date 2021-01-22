@@ -16,10 +16,6 @@
     "scripts": {
         "server:start": "@php bin/event-processor.php",
         "message-processor:start": "@php bin/http-server.php",
-
-
-
-
         "test": "vendor/bin/phpunit",
         "test:unit": "vendor/bin/phpunit --testsuite Unit",
         "test:integration": "vendor/bin/phpunit --testsuite Integration",
@@ -27,7 +23,8 @@
             "@local-stack:stop",
             "@local-stack:start"
         ],
-        "local-stack:start": "docker-compose up -d --remove-orphans",
+        "local-stack:start": "docker-compose up -d --remove-orphans localstack_dev",
+        "local-stack:start-fresh": "docker-compose up -d --build --remove-orphans localstack_dev",
         "local-stack:stop": "docker-compose down --remove-orphans",
         "verify": [
             "vendor/bin/phpcs",

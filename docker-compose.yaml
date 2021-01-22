@@ -1,5 +1,63 @@
 version: "3"
 services:
+
+  # Containers for local development
+
+  localstack_dev:
+    container_name: localstack_dev
+    depends_on:
+      - http_server
+      - message_processor
+      - localstack_external_deps
+    build:
+      context: .
+    env_file: $PWD/local-stack/.env
+    volumes:
+      - .:/app
+    command:
+      - php
+      - bin/http-server.php
+
+  http_server:
+    container_name: http_server
+    build:
+      context: .
+    env_file: $PWD/local-stack/.env
+    environment:
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./bin:/app/bin
+      - ./src:/app/src
+    command:
+      - php
+      - bin/http-server.php
+
+  message_processor:
+    container_name: message_processor
+    build:
+      context: .
+    env_file: $PWD/local-stack/.env
+    volumes:
+      - ./bin:/app/bin
+      - ./src:/app/src
+    command:
+      - php
+      - bin/message-processor.php
+
+  # Containers for local development external deps
+
+  localstack_external_deps:
+      image: tianon/true
+      restart: "no"
+      depends_on:
+          - postgres
+          - pgadmin
+          - rabbitmq
+          - redis
+          - metrics_pushgateway
+
   postgres:
     container_name: postgres
     image: postgres:latest
