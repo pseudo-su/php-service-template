@@ -1,11 +1,40 @@
 # PHP Service Template
 
-## Quick start
+## Contributing Quick start
 
-Global Dependencies:
+Global dependencies:
 
 - PHP 8.0
-- Composer
+- Composer [https://getcomposer.org/](https://getcomposer.org/)
+
+```sh
+# Install dependencies
+composer install
+# Run unit tests
+composer test:unit
+# Run linting/static-analysis
+composer verify
+composer verify:fix
+```
+
+### OPT1 - Run app on host machine
+
+```sh
+docker-compose up -d devstack_app_deps;
+composer test:integration:whitebox;
+
+composer server:start;
+composer message-processor:start;
+
+composer test:integration:blackbox;
+```
+
+### OPT2 - Run app Inside docker
+
+```sh
+docker-compose up -d devstack_app;
+composer test:integration;
+```
 
 ## Goals
 

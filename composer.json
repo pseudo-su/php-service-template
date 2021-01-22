@@ -14,10 +14,11 @@
         "bamarni/composer-bin-plugin": "^1.4"
     },
     "scripts": {
-        "server:start": "@php bin/event-processor.php",
-        "message-processor:start": "@php bin/http-server.php",
+        "http-server:start": "@php bin/http-server.php",
+        "message-processor:start": "@php bin/message-processor.php",
         "test": "php vendor/bin/phpunit",
         "test:unit": "php vendor/bin/phpunit --testsuite Unit",
+        "test:integration": "php vendor/bin/phpunit --testsuite IntegrationWhitebox,IntegrationBlackbox",
         "test:integration:whitebox": "php vendor/bin/phpunit --testsuite IntegrationWhitebox",
         "test:integration:blackbox": "php vendor/bin/phpunit --testsuite IntegrationBlackbox",
         "devstack:restart": [
