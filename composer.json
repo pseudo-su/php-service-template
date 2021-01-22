@@ -19,13 +19,13 @@
         "test": "vendor/bin/phpunit",
         "test:unit": "vendor/bin/phpunit --testsuite Unit",
         "test:integration": "vendor/bin/phpunit --testsuite Integration",
-        "local-stack:restart": [
-            "@local-stack:stop",
-            "@local-stack:start"
+        "devstack:restart": [
+            "@devstack:stop",
+            "@devstack:start"
         ],
-        "local-stack:start": "docker-compose up -d --remove-orphans localstack_dev",
-        "local-stack:start-fresh": "docker-compose up -d --build --remove-orphans localstack_dev",
-        "local-stack:stop": "docker-compose down --remove-orphans",
+        "devstack:start": "docker-compose up -d --remove-orphans devstack_dev",
+        "devstack:build-start": "docker-compose up -d --build --remove-orphans devstack_dev",
+        "devstack:stop": "docker-compose down --remove-orphans",
         "verify": [
             "vendor/bin/phpcs",
             "vendor/bin/psalm"

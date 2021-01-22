@@ -3,26 +3,25 @@ services:
 
   # Containers for local development
 
-  localstack_dev:
-    container_name: localstack_dev
+  devstack_dev:
+    container_name: devstack_dev
     depends_on:
       - http_server
       - message_processor
-      - localstack_external_deps
+      - devstack_external_deps
     build:
       context: .
-    env_file: $PWD/local-stack/.env
+      dockerfile: Dockerfile.dev
+    env_file: $PWD/devstack/.env
     volumes:
       - .:/app
-    command:
-      - php
-      - bin/http-server.php
 
   http_server:
     container_name: http_server
     build:
       context: .
-    env_file: $PWD/local-stack/.env
+      dockerfile: Dockerfile
+    env_file: $PWD/devstack/.env
     environment:
       PORT: 8080
     ports:
@@ -38,7 +37,8 @@ services:
     container_name: message_processor
     build:
       context: .
-    env_file: $PWD/local-stack/.env
+      dockerfile: Dockerfile
+    env_file: $PWD/devstack/.env
     volumes:
       - ./bin:/app/bin
       - ./src:/app/src
@@ -48,7 +48,7 @@ services:
 
   # Containers for local development external deps
 
-  localstack_external_deps:
+  devstack_external_deps:
       image: tianon/true
       restart: "no"
       depends_on:
@@ -65,34 +65,34 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ./local-stack/.env
+      - ./devstack/.env
     volumes:
-      - ./local-stack/postgres/data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - ./devstack/postgres/data:/var/lib/postgresql/data/ # persist data even if container shuts down
 
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:4.15
     env_file:
-      - ./local-stack/.env
+      - ./devstack/.env
     depends_on:
       - 'postgres'
     ports:
       - 5050:5050
     volumes:
-      - './local-stack/pgadmin/config/servers.json:/pgadmin4/servers.json'
+      - './devstack/pgadmin/config/servers.json:/pgadmin4/servers.json'
 
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
     env_file:
-      - ./local-stack/.env
+      - ./devstack/.env
     ports:
       - 5672:5672
       - 15672:15672
     volumes:
-      - ./local-stack/rabbitmq/data:/var/lib/rabbitmq
-      - ./local-stack/rabbitmq/logs:/var/log/rabbitmq
-      - ./local-stack/rabbitmq/etc:/etc/rabbitmq
+      - ./devstack/rabbitmq/data:/var/lib/rabbitmq
+      - ./devstack/rabbitmq/logs:/var/log/rabbitmq
+      - ./devstack/rabbitmq/etc:/etc/rabbitmq
 
   redis:
     image: "redis:alpine"
@@ -101,10 +101,10 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ./local-stack/redis/data:/var/lib/redis
-    #   - ./local-stack/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./devstack/redis/data:/var/lib/redis
+    #   - ./devstack/redis/redis.conf:/usr/local/etc/redis/redis.conf
     env_file:
-      - ./local-stack/.env
+      - ./devstack/.env
 
   metrics_pushgateway:
     image: prom/pushgateway:latest

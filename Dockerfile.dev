@@ -1,0 +1,12 @@
+FROM php:8.0-cli-alpine as builder
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /app
+COPY composer.json composer.lock ./
+COPY vendor-bin/ vendor-bin/
+
+RUN composer install \
+        --no-interaction
+
+CMD [ "echo", "\"No CMD specified\"" ]

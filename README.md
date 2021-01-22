@@ -15,7 +15,7 @@ Global Dependencies:
 - Config defined/loaded exclusively through environment variables
 - Debugging
   - vscode defaults
-- local-stack using podman
+- devstack using podman
   - 3rd party deps (postgres, rabbitmq, redis)
   - run service (`bin/http-server.php`, `bin/message-processor.php`)
 - DB/ORM (Doctrine 2.0)

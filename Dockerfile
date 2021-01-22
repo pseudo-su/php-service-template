@@ -5,7 +5,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /app
 COPY composer.json composer.lock ./
 
-RUN composer install
+RUN composer install \
+        --no-scripts \
+        --no-progress \
+        --no-suggest \
+        --prefer-dist \
+        --no-dev \
+        --no-autoloader \
+        --no-interaction
 
 FROM php:8.0-cli-alpine as server
 
