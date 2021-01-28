@@ -44,11 +44,6 @@ composer test:integration;
 
 ## TODO
 
-- Investigate different async runtimes+frameworks
-  - Swoole+Slim
-  - Swoole+Swoft
-  - ReactPHP+?
-  - Roadrunner+Spiral
 - Deploy Infra and observability
   - Setup
     - Error reporting - sentry
@@ -57,6 +52,5 @@ composer test:integration;
     - Dashboard - Grafana cloud (grafana)
 - Testing
   - Generate OpenAPI specs from blackbox tests
-  - Use OpenAPI and/or AsyncAPI specs in blackbox tests
-- Setup vscode so works out of the box
-  - Debugging
+  - Use OpenAPI and/or AsyncAPI specs in integration tests
+- Setup default vscode settings.json so works out of the box for debugging
