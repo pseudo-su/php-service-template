@@ -44,6 +44,10 @@ composer test:integration;
 
 ## TODO
 
+- Implement
+  - HTTP server examples
+  - RabbitMQ event processing examples
+  - DB/ORM examples
 - Deploy Infra and observability
   - Setup
     - Error reporting - sentry
@@ -51,6 +55,7 @@ composer test:integration;
     - Metrics - Grafana cloud (prometheus)
     - Dashboard - Grafana cloud (grafana)
 - Testing
-  - Generate OpenAPI specs from blackbox tests
+  - Add unit test examples
+  - Add integration tests that test app with dependencies
   - Use OpenAPI and/or AsyncAPI specs in integration tests
 - Setup default vscode settings.json so works out of the box for debugging
